@@ -6,5 +6,6 @@ Soon I'll edit this readme to something good, but for now it is what it is ¯\\_
 
 ### Current progreess
 breathing by VTStudio. Code moves mouth
+
 https://github.com/JarikDem-Bot/ai-waifu-test/assets/73791422/577a54f9-ff8a-4303-96fb-3ecd58fd4afa
 
