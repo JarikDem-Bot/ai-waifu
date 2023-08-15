@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Enviroment variables
+.env
+
 # C extensions
 *.so
 
@@ -151,6 +154,9 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Python file for quick tests
+test.py
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
