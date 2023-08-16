@@ -34,15 +34,13 @@ class VTSController:
             print("inside if")
             res = await self.send_request(message_type='AuthenticationTokenRequest', data=self.base_info)
             if res['messageType'] == 'APIError':
-                print(f"Error occured:\n\t{res['data']['message']}")
-                exit()
+                raise Exception(f"Error occured:\n\t{res['data']['message']}")
             self.__update_token(res['data']['authenticationToken'])
             return
         
         res = await self.send_request(message_type='AuthenticationRequest', data={**self.base_info, 'authenticationToken': self.vts_token})
         if not res['data']['authenticated']:
-            print(f"Couldn't connect to the API: {res['data']['reason']}")
-            exit()
+            raise ConnectionError(f"Couldn't connect to the API: {res['data']['reason']}")
 
     async def initialise(self) -> None:
         self.update_dotenv()
@@ -67,7 +65,7 @@ class VTSController:
         load_dotenv(override=True)
         self.vts_token = getenv("VTS_TOKEN")
 
-    def __update_token(self,token) -> None:
+    def __update_token(self,token:str) -> None:
         self.vts_token = token
         set_key('.env', 'VTS_TOKEN', token)
         
