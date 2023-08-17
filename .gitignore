@@ -158,10 +158,15 @@ cython_debug/
 # Python file for quick tests
 temp.py
 
+# vsCode folder 
 .vscode/
 
+# Generated sound files 
 *.wav
 *.mp3
+
+# Messages history
+message_history.txt
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
