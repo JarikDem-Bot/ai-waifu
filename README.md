@@ -41,7 +41,7 @@ _Here will be video/gif demonstration of this project :3_
 Here are the steps to get started:
 
  1. Install Python 3.10.5 if you don't already have it installed.
- 2. Clone the repository by running `git clone https://github.com/JarikDem-Bot/ai-waifu-test.git`
+ 2. Clone the repository by running `git clone https://github.com/JarikDem-Bot/ai-waifu.git`
  3. Install the required Python packages by running `pip install -r requirements.txt` in the project directory.
  4. Create `.env` file and enter your API keys
     <details>
