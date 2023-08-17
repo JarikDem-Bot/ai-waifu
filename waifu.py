@@ -1,6 +1,7 @@
 import openai
 import speech_recognition as sr
 from gtts import gTTS
+from playsound import playsound
 
 from dotenv import load_dotenv
 from os import getenv, path
@@ -22,9 +23,12 @@ class Waifu:
         self.message_history = []
         self.context = []
 
+        self.tts_service = None
+
 
     def initialise(self, user_input_service:str | None = None, stt_duration:float | None = None, mic_index:int | None = None,
-                    chatbot_service:str | None = None, chatbot_model:str | None = None, chatbot_temperature:float | None = None, personality_file:str | None = None) -> None:
+                    chatbot_service:str | None = None, chatbot_model:str | None = None, chatbot_temperature:float | None = None, personality_file:str | None = None,
+                    tts_service:str | None = None) -> None:
         load_dotenv()
 
         self.update_user_input(user_input_service=user_input_service, stt_duration=stt_duration)
@@ -34,6 +38,8 @@ class Waifu:
         openai.api_key = getenv("OPENAI_API_KEY")
         self.update_chatbot(service = chatbot_service, model = chatbot_model, temperature = chatbot_temperature, personality_file = personality_file)
         self.__load_chatbot_data()
+
+        self.update_tts()
 
     def update_user_input(self, user_input_service:str | None = 'whisper', stt_duration:float | None = 0.5) -> None:
         if user_input_service:
@@ -67,19 +73,22 @@ class Waifu:
         elif self.chatbot_personality_file is None:
             self.chatbot_personality_file = 'personality.txt'
 
-    def update_tts(self):
-        pass
+    def update_tts(self, service:str | None = 'google') -> None:
+        if service:
+            self.tts_service = service
+        elif self.tts_service is None:
+            self.tts_service = 'google'
 
-    def get_user_input(self, service:str | None = None, tts_duration:float | None = None) -> str:
+    def get_user_input(self, service:str | None = None, stt_duration:float | None = None) -> str:
         service = self.user_input_service if service is None else service
-        tts_duration = self.tts_duration if tts_duration is None else tts_duration
+        stt_duration = self.stt_duration if stt_duration is None else stt_duration
 
         supported_stt_services = ['whisper', 'google']
         supported_text_services = ['console']
 
         result = ""
         if service in supported_stt_services:
-            result = self.__recognise_speech(service, duration=tts_duration)
+            result = self.__recognise_speech(service, duration=stt_duration)
         elif service in supported_text_services:
             result = self.__get_text_input(service)
         else:
@@ -92,20 +101,22 @@ class Waifu:
         model = self.chatbot_model if model is None else model
         temperature = self.chatbot_temperature if temperature is None else temperature
 
-        supported_chatbot_services = ['openai']
+        supported_chatbot_services = ['openai', 'test']
 
         result = ""
         if service == 'openai':
             result = self.__get_openai_response(prompt, model=model, temperature=temperature)
+        elif service == 'test':
+            result = "This is test answer from Waifu. Nya kawaii, senpai!"
         else:
             raise ValueError(f"{service} servise doesn't supported. Please, use one of the following services: {supported_chatbot_services}")
         
         return result
 
     def tts_say(self, text:str, service:str | None = None, voice:str | None = None) -> None:
-        service = self.user_input_service if service is None else service
+        service = self.tts_service if service is None else service
 
-        supported_tts_services = ['google', 'elevenlabs']
+        supported_tts_services = ['google', 'elevenlabs', 'console']
 
         if service not  in supported_tts_services:
             raise ValueError(f"{service} servise doesn't supported. Please, use one of the following services: {supported_tts_services}")
@@ -113,8 +124,11 @@ class Waifu:
 
         if service == 'google':
             audio = gTTS(text=text, lang='en', slow=False, lang_check=False).save('output.mp3')
+            playsound('output.mp3')
         elif service == 'elevenlabs':
             pass
+        elif service == 'console':
+            print('\33[7m' + "Waifu:" + '\33[0m' + f' {text}')
 
     def __get_openai_response(self, prompt:str, model:str, temperature:float) -> str:
         self.__add_message('user', prompt)
@@ -186,7 +200,9 @@ def main():
     w = Waifu()
     w.initialise(user_input_service='console')
 
-    print(f"User entered: {w.get_user_input()}")
+    input = w.get_user_input()
+    answ = w.get_chatbot_response(input)
+    w.tts_say(answ)
 
 if __name__ == "__main__":
     main()
