@@ -52,6 +52,8 @@ Here are the steps to get started:
       OPENAI_API_KEY='YOUR_OPEN_AI_KEY'
       ```
     </details>
+    
+ 5. Install [VB-Cable](https://vb-audio.com/Cable/)
  6. Select your required settings in `main.py` in `waifu.initialise`
  7. Run the project by executing `python main.py` in the project directory.
 
