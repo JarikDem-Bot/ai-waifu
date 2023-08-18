@@ -49,6 +49,7 @@ _Here will be video/gif demonstration of this project :3_
       ```
       VTS_TOKEN=''
       OPENAI_API_KEY='YOUR_OPEN_AI_KEY'
+      ELEVENLABS_API_KEY='YOUR_ELEVENLABS_KEY'
       ```
     </details>
     
