@@ -10,6 +10,7 @@
 
 **Anime AI Waifu** is an AI powered voice assistant with VTuber's model, that combines the charm of anime characters with cutting-edge technologies. This project is meant to create an engaging experience where you can interact with desired character in real-time without powerful hardware.
 
+
 ## Features
 
 - 🎤 **Voice Interaction:** Speak to your AI waifu and get instant (almost) responses.
@@ -37,8 +38,6 @@ _Here will be video/gif demonstration of this project :3_
 
 
 ## Installation
-
-Here are the steps to get started:
 
  1. Install Python 3.10.5 if you don't already have it installed.
  2. Clone the repository by running `git clone https://github.com/JarikDem-Bot/ai-waifu.git`
