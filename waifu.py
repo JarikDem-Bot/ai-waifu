@@ -1,6 +1,7 @@
 import openai
 import speech_recognition as sr
 from gtts import gTTS
+from elevenlabs import generate, save, set_api_key, voices
 import sounddevice as sd
 import soundfile as sf
 
@@ -25,11 +26,13 @@ class Waifu:
         self.context = []
 
         self.tts_service = None
+        self.tts_voice = None
+        self.tts_model = None
 
 
     def initialise(self, user_input_service:str | None = None, stt_duration:float | None = None, mic_index:int | None = None,
                     chatbot_service:str | None = None, chatbot_model:str | None = None, chatbot_temperature:float | None = None, personality_file:str | None = None,
-                    tts_service:str | None = None, output_device = None) -> None:
+                    tts_service:str | None = None, output_device = None, tts_voice:str | None = None, tts_model:str | None = None) -> None:
         load_dotenv()
 
         self.update_user_input(user_input_service=user_input_service, stt_duration=stt_duration)
@@ -74,11 +77,23 @@ class Waifu:
         elif self.chatbot_personality_file is None:
             self.chatbot_personality_file = 'personality.txt'
 
-    def update_tts(self, service:str | None = 'google', output_device = None) -> None:
+    def update_tts(self, service:str | None = 'google', output_device = None, voice:str | None = None, model:str | None = None) -> None:
         if service:
             self.tts_service = service
         elif self.tts_service is None:
             self.tts_service = 'google'
+
+        set_api_key(getenv('ELEVENLABS_API_KEY'))
+
+        if voice:
+            self.tts_voice = voice
+        elif self.tts_voice is None:
+            self.tts_voice = 'Elli'
+
+        if model:
+            self.tts_model = model
+        elif self.tts_model is None:
+            self.tts_model = 'eleven_monolingual_v1'
 
         if output_device is not None:
             sd.check_output_settings(output_device)
@@ -122,8 +137,10 @@ class Waifu:
         
         return result
 
-    def tts_say(self, text:str, service:str | None = None, voice:str | None = None) -> None:
+    def tts_say(self, text:str, service:str | None = None, voice:str | None = None, model:str | None = None) -> None:
         service = self.tts_service if service is None else service
+        voice = self.tts_voice if voice is None else voice
+        model = self.tts_model if model is None else model
 
         supported_tts_services = ['google', 'elevenlabs', 'console']
 
@@ -134,14 +151,16 @@ class Waifu:
 
         if service == 'google':
             gTTS(text=text, lang='en', slow=False, lang_check=False).save('output.mp3')
-
-            data, fs = sf.read('output.mp3')
-            sd.play(data, fs)
-            sd.wait()
         elif service == 'elevenlabs':
-            pass
+            self.__elevenlabs_generate(text=text, voice=voice, model=model)
+
         elif service == 'console':
             print('\n\33[7m' + "Waifu:" + '\33[0m' + f' {text}')
+            return
+
+        data, fs = sf.read('output.mp3')
+        sd.play(data, fs)
+        sd.wait()
 
     def conversation_cycle(self) -> dict:
         input = self.get_user_input()
@@ -192,6 +211,14 @@ class Waifu:
             user_input = input('\n\33[42m' + "User:" + '\33[0m' + " ")
         return user_input
 
+    def __elevenlabs_generate(self, text:str, voice:str, model:str, filename:str='output.mp3'):
+        audio = generate(
+                 text=text,
+                 voice=voice,
+                 model=model
+                )
+        save(audio, filename)
+
     def __recognise_speech(self, service:str, duration:float) -> str:
         with self.mic as source:
             print('(Start listening)')
@@ -221,11 +248,13 @@ class Waifu:
 def main():
     w = Waifu()
     w.initialise(user_input_service='console', 
-                 chatbot_service='test', 
-                 tts_service='google', output_device=8)
+                 chatbot_service='openai', 
+                 tts_service='elevenlabs', output_device=8)
 
-    while True:
-        w.conversation_cycle()
+    w.conversation_cycle()
+
+    #while True:
+    #    w.conversation_cycle()
 
 if __name__ == "__main__":
     main()
