@@ -5,7 +5,7 @@ def main():
 
     waifu.initialise(user_input_service='whisper',
                  chatbot_service='openai',
-                 tts_service='google', output_device=8)
+                 tts_service='elevenlabs', output_device=8)
 
     while True:
         waifu.conversation_cycle()
