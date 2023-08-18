@@ -25,7 +25,7 @@
 
 - 📢 **Text-to-Speech:** Hear your AI waifu's responses as she speaks back to you, creating an immersive experience.
     - Google tts - free and simple solution.
-    - ElevenLabs - **_in progress..._**
+    - ElevenLabs - amazing results, tons of voices.
     - Console - get text responses in your console (but VTube model will be just idle).
 
 - 🌐 **Integration with VTube Studio:** Seamlessly connect your AI waifu to VTube Studio for an even more lifelike and visually engaging interaction.
@@ -54,8 +54,23 @@ _Here will be video/gif demonstration of this project :3_
     </details>
     
  5. Install [VB-Cable](https://vb-audio.com/Cable/)
- 6. Select your required settings in `main.py` in `waifu.initialise`
- 7. Run the project by executing `python main.py` in the project directory.
+ 7. Install and set [VTube Studio](https://store.steampowered.com/app/1325860/VTube_Studio/)
+    <details>
+      <summary>Settings: </summary>
+      
+      - Select `CABLE Output` as microphone. Select `Preview microphone audio` to hear waifu's answers
+
+        <img src='https://github.com/JarikDem-Bot/ai-waifu/assets/73791422/a38f8b45-44f3-4b4d-9626-2f3c812b8ba2' width='50%'>
+        
+      - Select input and output for `Mouth Open`. Optionally you can set "breathing" to get idle movents.
+
+        <img src='https://github.com/JarikDem-Bot/ai-waifu/assets/73791422/4e7341b1-91a8-48f9-94e4-b5669163c89b' width='50%'>
+
+    </details>
+
+
+ 9. Select your required settings in `main.py` in `waifu.initialise`
+ 10. Run the project by executing `python main.py` in the project directory.
 
 <br>
 
