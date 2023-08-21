@@ -7,7 +7,7 @@ import soundfile as sf
 
 from dotenv import load_dotenv
 from os import getenv, path
-from json import load, dump
+from json import load, dump, JSONDecodeError
 
 class Waifu:
     def __init__(self) -> None:
@@ -199,7 +199,10 @@ class Waifu:
 
         if path.isfile('./message_history.txt'):
             with open('message_history.txt', 'r') as f:
-                self.message_history = load(f)
+                try:
+                    self.message_history = load(f)
+                except JSONDecodeError:
+                    pass
 
     def __update_message_history(self) -> None:
         with open('message_history.txt', 'w') as f:
@@ -249,7 +252,7 @@ def main():
     w = Waifu()
     w.initialise(user_input_service='console', 
                  chatbot_service='openai', 
-                 tts_service='elevenlabs', output_device=8)
+                 tts_service='google', output_device=8)
 
     w.conversation_cycle()
 
