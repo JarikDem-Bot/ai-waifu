@@ -47,7 +47,7 @@
     <details>
       <summary> .env template</summary>
       
-      ```
+      ```shell
       VTS_TOKEN=''
       OPENAI_API_KEY='YOUR_OPEN_AI_KEY'
       ELEVENLABS_API_KEY='YOUR_ELEVENLABS_KEY'
