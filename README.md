@@ -34,8 +34,9 @@
 
 ## Showcase
 
-_Here will be video/gif demonstration of this project :3_
+[![Video demonstration](https://i9.ytimg.com/vi_webp/e8sF09jf_DA/mq1.webp?sqp=CPjdkqcG-oaymwEmCMACELQB8quKqQMa8AEB-AHmCYAC0AWKAgwIABABGGUgWShNMA8=&rs=AOn4CLCZt2ZJWKYimvU2MMHeS1B95z7pWg)](https://youtu.be/e8sF09jf_DA)
 
+*Demonstration in real time without cutouts or speed up. This is real delay in answers.
 
 ## Installation
 
