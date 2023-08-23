@@ -30,9 +30,9 @@ class Waifu:
         self.tts_model = None
 
 
-    def initialise(self, user_input_service:str | None = None, stt_duration:float | None = None, mic_index:int | None = None,
-                    chatbot_service:str | None = None, chatbot_model:str | None = None, chatbot_temperature:float | None = None, personality_file:str | None = None,
-                    tts_service:str | None = None, output_device = None, tts_voice:str | None = None, tts_model:str | None = None) -> None:
+    def initialise(self, user_input_service:str = None, stt_duration:float = None, mic_index:int = None,
+                    chatbot_service:str = None, chatbot_model:str = None, chatbot_temperature:float = None, personality_file:str = None,
+                    tts_service:str = None, output_device = None, tts_voice:str = None, tts_model:str = None) -> None:
         load_dotenv()
 
         self.update_user_input(user_input_service=user_input_service, stt_duration=stt_duration)
@@ -45,7 +45,7 @@ class Waifu:
 
         self.update_tts(service=tts_service, output_device=output_device)
 
-    def update_user_input(self, user_input_service:str | None = 'whisper', stt_duration:float | None = 0.5) -> None:
+    def update_user_input(self, user_input_service:str = 'whisper', stt_duration:float = 0.5) -> None:
         if user_input_service:
             self.user_input_service = user_input_service
         elif self.user_input_service is None:
@@ -56,7 +56,7 @@ class Waifu:
         elif self.stt_duration is None:
             self.stt_duration = 0.5
 
-    def update_chatbot(self, service:str | None = 'openai', model:str | None = 'gpt-3.5-turbo', temperature:float | None = 0.5, personality_file:str | None = 'personality.txt') -> None:
+    def update_chatbot(self, service:str = 'openai', model:str = 'gpt-3.5-turbo', temperature:float = 0.5, personality_file:str = 'personality.txt') -> None:
         if service:
             self.chatbot_service = service
         elif self.chatbot_service is None:
@@ -77,7 +77,7 @@ class Waifu:
         elif self.chatbot_personality_file is None:
             self.chatbot_personality_file = 'personality.txt'
 
-    def update_tts(self, service:str | None = 'google', output_device = None, voice:str | None = None, model:str | None = None) -> None:
+    def update_tts(self, service:str = 'google', output_device = None, voice:str = None, model:str = None) -> None:
         if service:
             self.tts_service = service
         elif self.tts_service is None:
@@ -103,7 +103,7 @@ class Waifu:
     def get_audio_devices(self):
         return sd.query_devices()
 
-    def get_user_input(self, service:str | None = None, stt_duration:float | None = None) -> str:
+    def get_user_input(self, service:str = None, stt_duration:float = None) -> str:
         service = self.user_input_service if service is None else service
         stt_duration = self.stt_duration if stt_duration is None else stt_duration
 
@@ -120,7 +120,7 @@ class Waifu:
         
         return result
 
-    def get_chatbot_response(self, prompt:str, service:str | None = None, model:str | None = None, temperature:float | None = None) -> str:
+    def get_chatbot_response(self, prompt:str, service:str = None, model:str = None, temperature:float = None) -> str:
         service = self.chatbot_service if service is None else service
         model = self.chatbot_model if model is None else model
         temperature = self.chatbot_temperature if temperature is None else temperature
@@ -137,7 +137,7 @@ class Waifu:
         
         return result
 
-    def tts_say(self, text:str, service:str | None = None, voice:str | None = None, model:str | None = None) -> None:
+    def tts_say(self, text:str, service:str = None, voice:str = None, model:str = None) -> None:
         service = self.tts_service if service is None else service
         voice = self.tts_voice if voice is None else voice
         model = self.tts_model if model is None else model
@@ -190,7 +190,7 @@ class Waifu:
     def __add_message(self, role:str, content:str) -> None:
         self.message_history.append({'role': role, 'content': content})
 
-    def __load_chatbot_data(self, file_name:str | None = None) -> None:
+    def __load_chatbot_data(self, file_name:str = None) -> None:
         file_name = self.chatbot_personality_file if file_name is None else file_name
 
         with open(file_name, 'r') as f:
@@ -251,7 +251,7 @@ class Waifu:
 def main():
     w = Waifu()
     w.initialise(user_input_service='console', 
-                 chatbot_service='openai', 
+                 chatbot_service='test', 
                  tts_service='google', output_device=8)
 
     w.conversation_cycle()
