@@ -30,7 +30,7 @@ class Waifu:
         self.tts_model = None
 
 
-    def initialise(self, user_input_service:str = None, stt_duration:float = None, mic_index:int = None,
+    def initialize(self, user_input_service:str = None, stt_duration:float = None, mic_index:int = None,
                     chatbot_service:str = None, chatbot_model:str = None, chatbot_temperature:float = None, personality_file:str = None,
                     tts_service:str = None, output_device = None, tts_voice:str = None, tts_model:str = None) -> None:
         load_dotenv()
@@ -43,7 +43,7 @@ class Waifu:
         self.update_chatbot(service = chatbot_service, model = chatbot_model, temperature = chatbot_temperature, personality_file = personality_file)
         self.__load_chatbot_data()
 
-        self.update_tts(service=tts_service, output_device=output_device)
+        self.update_tts(service=tts_service, output_device=output_device, voice=tts_voice, model=tts_model)
 
     def update_user_input(self, user_input_service:str = 'whisper', stt_duration:float = 0.5) -> None:
         if user_input_service:
@@ -250,7 +250,7 @@ class Waifu:
 
 def main():
     w = Waifu()
-    w.initialise(user_input_service='console', 
+    w.initialize(user_input_service='console', 
                  chatbot_service='test', 
                  tts_service='google', output_device=8)
 
