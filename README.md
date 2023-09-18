@@ -49,7 +49,6 @@ To run this project, you need:
       <summary> .env template</summary>
       
       ```shell
-      VTS_TOKEN=''
       OPENAI_API_KEY='YOUR_OPEN_AI_KEY'
       ELEVENLABS_API_KEY='YOUR_ELEVENLABS_KEY'
       ```
@@ -96,14 +95,14 @@ To run this project, you need:
           - `"elevenlabs"` - ElevenLabs tts with good quality; paid, requires ElevenLabs API key.
           - `"console"` - output will be printed in console (free).
           - `None` or unspecified - default value is `"google"`.
-      - `output_device` - (int) output device ID or (str) output device name substring. If VB-Cable is used, you need to find device, that will start with `CABLE Input (VB-Audio Virtual` using `sd.query_devices()` command. Default value is `8` (may not work for you). 
+      - `output_device` - (int) output device ID or (str) output device name substring. If VB-Cable is used, you need to find device, that will start with `CABLE Input (VB-Audio Virtual` using `sd.query_devices()` command. 
       - `tts_voice` (str) - ElevenLabs voice name. Default value is `"Elli"`.
       - `tts_model` (str) - ElevenLabs model. Recommended values are `"eleven_monolingual_v1"` and `"eleven_multilingual_v1"`. Default value is `"eleven_monolingual_v1"`.
 
     </details>
 
     
- 11. Run the project by executing `python main.py` in the project directory.
+ 10. Run the project by executing `python main.py` in the project directory.
 
 <br>
 
