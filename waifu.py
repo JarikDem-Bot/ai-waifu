@@ -103,8 +103,8 @@ class Waifu:
             except sd.PortAudioError:
                 print("Invalid output device! Make sure you've launched VB-Cable.\n",
                        "Check that you've choosed the correct output_device in initialize method.\n", 
-                       "From the list below, select device that starts with 'Cable Input' and set output_device to it's id in list.\n",
-                       "If you still have this error try every device that starts with 'Cable Input'. If it doesn't help please create GitHub issue.")
+                       "From the list below, select device that starts with 'CABLE Input' and set output_device to it's id in list.\n",
+                       "If you still have this error try every device that starts with 'CABLE Input'. If it doesn't help please create GitHub issue.")
                 print(sd.query_devices())
                 raise
 
