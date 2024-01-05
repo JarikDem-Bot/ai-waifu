@@ -7,7 +7,7 @@ import soundfile as sf
 
 from dotenv import load_dotenv
 from os import getenv, path
-from json import load, dump, JSONDecodeError
+from json import load, dump, dumps, JSONDecodeError
 
 class Waifu:
     def __init__(self) -> None:
@@ -96,9 +96,17 @@ class Waifu:
             self.tts_model = 'eleven_monolingual_v1'
 
         if output_device is not None:
-            sd.check_output_settings(output_device)
-            sd.default.samplerate = 44100
-            sd.default.device = output_device
+            try:
+                sd.check_output_settings(output_device)
+                sd.default.samplerate = 44100
+                sd.default.device = output_device
+            except sd.PortAudioError:
+                print("Invalid output device! Make sure you've launched VB-Cable.\n",
+                       "Check that you've choosed the correct output_device in initialize method.\n", 
+                       "From the list below, select device that starts with 'Cable Input' and set output_device to it's id in list.\n",
+                       "If you still have this error try every device that starts with 'Cable Input'. If it doesn't help please create GitHub issue.")
+                print(sd.query_devices())
+                raise
 
     def get_audio_devices(self):
         return sd.query_devices()
